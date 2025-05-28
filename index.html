@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende con Johansitoweb</title>
+    <base target="_self">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .dark .course-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .course-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+        }
+        .course-modal-content {
+            background-color: white;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            position: relative;
+        }
+        .course-modal-content.dark {
+            background-color: #1a202c;
+        }
+        .course-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+        }
+        .course-modal-close:hover {
+            color: #333;
+        }
+        .dark .course-modal-close {
+            color: #ccc;
+        }
+        .dark .course-modal-close:hover {
+            color: #fff;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-sm">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white flex items-center">
+                    <i class="fas fa-graduation-cap mr-2 text-primary-600"></i> Aprende con Johansitoweb
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden text-gray-700"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4 py-3">
+                <ul class="flex flex-wrap justify-center gap-4 text-gray-700 dark:text-gray-300">
+                    <li><a href="#frontend" class="hover:text-primary-600 dark:hover:text-primary-400">Frontend</a></li>
+                    <li><a href="#backend" class="hover:text-primary-600 dark:hover:text-primary-400">Backend</a></li>
+                    <li><a href="#devops" class="hover:text-primary-600 dark:hover:text-primary-400">DevOps</a></li>
+                    <li><a href="#redes" class="hover:text-primary-600 dark:hover:text-primary-400">Redes</a></li>
+                    <li><a href="#telefonia" class="hover:text-primary-600 dark:hover:text-primary-400">Telefonía</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <!-- Frontend Courses -->
+            <section id="frontend" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Cursos de Frontend</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Cards will be generated here -->
+                </div>
+            </section>
+
+            <!-- Backend Courses -->
+            <section id="backend" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Cursos de Backend</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Cards will be generated here -->
+                </div>
+            </section>
+
+            <!-- DevOps Courses -->
+            <section id="devops" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Cursos de DevOps</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Cards will be generated here -->
+                </div>
+            </section>
+
+            <!-- Redes Courses -->
+            <section id="redes" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Cursos de Redes</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Cards will be generated here -->
+                </div>
+            </section>
+
+            <!-- Telefonía Courses -->
+            <section id="telefonia" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Cursos de Telefonía</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course Cards will be generated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Course Modal -->
+        <div id="course-modal" class="course-modal">
+            <div class="course-modal-content">
+                <span id="course-modal-close" class="course-modal-close">&times;</span>
+                <h3 id="course-title" class="text-2xl font-bold text-gray-800 dark:text-white mb-4"></h3>
+                <div class="video-container mb-6">
+                    <iframe id="course-video" src="" allowfullscreen></iframe>
+                </div>
+                <h4 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Temario</h4>
+                <ul id="course-syllabus" class="list-disc pl-5 text-gray-600 dark:text-gray-400 space-y-1"></ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="container mx-auto px-4 py-6">
+                <p class="text-center text-gray-600 dark:text-gray-400">© 2023 Aprende con Johansitoweb. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Sample course data
+        const courses = {
+            frontend: [
+                {
+                    id: '1',
+                    title: 'HTML y CSS desde cero',
+                    description: 'Aprende a crear páginas web desde lo básico hasta lo avanzado',
+                    image: 'https://images.unsplash.com/photo-1552674603-0e2c1f808e9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    syllabus: [
+                        'Introducción a HTML',
+                        'Estructura básica de una página web',
+                        'Estilos con CSS',
+                        'Responsive Design',
+                        'Proyecto final: Portafolio personal'
+                    ]
+                },
+                {
+                    id: '2',
+                    title: 'JavaScript Avanzado',
+                    description: 'Domina JavaScript con conceptos avanzados y buenas prácticas',
+                    image: 'https://images.unsplash.com/photo-1531297483062-f0c4f8cb9f2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/7K7w5J8K1dM',
+                    syllabus: [
+                        'Funciones y closures',
+                        'Programación orientada a objetos',
+                        'Manipulación del DOM',
+                        'Asincronía y promesas',
+                        'Proyecto final: Aplicación de tareas'
+                    ]
+                }
+            ],
+            backend: [
+                {
+                    id: '3',
+                    title: 'Node.js para principiantes',
+                    description: 'Crea APIs y servidores con Node.js y Express',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Introducción a Node.js',
+                        'Creando un servidor básico',
+                        'Manejo de rutas con Express',
+                        'Base de datos con MongoDB',
+                        'Proyecto final: API de usuarios'
+                    ]
+                },
+                {
+                    id: '4',
+                    title: 'Python para Backend',
+                    description: 'Desarrollo de APIs con Python y Flask',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Introducción a Python',
+                        'Flask y rutas',
+                        'Manejo de bases de datos',
+                        'Autenticación y seguridad',
+                        'Proyecto final: API de blog'
+                    ]
+                }
+            ],
+            devops: [
+                {
+                    id: '5',
+                    title: 'Introducción a Docker',
+                    description: 'Aprende a contenerizar aplicaciones con Docker',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Conceptos básicos de Docker',
+                        'Creando imágenes',
+                        'Docker Compose',
+                        'Despliegue en producción',
+                        'Proyecto final: Aplicación contenerizada'
+                    ]
+                },
+                {
+                    id: '6',
+                    title: 'AWS para principiantes',
+                    description: 'Introducción a los servicios de Amazon Web Services',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Introducción a AWS',
+                        'EC2 y S3',
+                        'Lambda y API Gateway',
+                        'Seguridad en AWS',
+                        'Proyecto final: Aplicación en la nube'
+                    ]
+                }
+            ],
+            redes: [
+                {
+                    id: '7',
+                    title: 'Fundamentos de Redes',
+                    description: 'Aprende los conceptos básicos de redes informáticas',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Modelo OSI',
+                        'IP y subredes',
+                        'Switching y routing',
+                        'Seguridad de redes',
+                        'Proyecto final: Configuración de red'
+                    ]
+                },
+                {
+                    id: '8',
+                    title: 'Cisco CCNA',
+                    description: 'Preparación para el examen de certificación CCNA',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Introducción a Cisco',
+                        'Configuración de routers',
+                        'VLANs y STP',
+                        'NAT y ACLs',
+                        'Proyecto final: Laboratorio de red'
+                    ]
+                }
+            ],
+            telefonia: [
+                {
+                    id: '9',
+                    title: 'VoIP y Asterisk',
+                    description: 'Aprende a configurar sistemas de telefonía IP',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Introducción a VoIP',
+                        'Configuración de Asterisk',
+                        'Extensiones y troncales',
+                        'Seguridad en VoIP',
+                        'Proyecto final: Central telefónica'
+                    ]
+                },
+                {
+                    id: '10',
+                    title: '5G y Redes Móviles',
+                    description: 'Entiende las tecnologías detrás de las redes móviles',
+                    image: 'https://images.unsplash.com/photo-1504384308098-6e55c7505f8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                    video: 'https://www.youtube.com/embed/3jE6R4hJv5M',
+                    syllabus: [
+                        'Arquitectura de redes móviles',
+                        'Tecnologías 4G y 5G',
+                        'QoS y roaming',
+                        'Seguridad en redes móviles',
+                        'Proyecto final: Simulación de red'
+                    ]
+                }
+            ]
+        };
+
+        // Generate course cards
+        function generateCourseCards(category) {
+            const container = document.querySelector(`#${category} .grid`);
+            container.innerHTML = '';
+            
+            courses[category].forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 fade-in';
+                
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <h3 class="text-white font-bold text-lg truncate">${course.title}</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">${course.description}</p>
+                        <button class="view-course w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-md transition-colors" data-id="${course.id}">
+                            <i class="fas fa-play mr-1"></i> Ver Curso
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize course cards
+        Object.keys(courses).forEach(category => {
+            generateCourseCards(category);
+        });
+
+        // Handle course view
+        document.querySelectorAll('.view-course').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const courseId = this.getAttribute('data-id');
+                const course = Object.values(courses).flat().find(c => c.id === courseId);
+                
+                if (course) {
+                    document.getElementById('course-title').textContent = course.title;
+                    document.getElementById('course-video').src = course.video;
+                    document.getElementById('course-syllabus').innerHTML = course.syllabus.map(item => `<li>${item}</li>`).join('');
+                    document.getElementById('course-modal').style.display = 'flex';
+                }
+            });
+        });
+
+        // Close modal
+        document.getElementById('course-modal-close').addEventListener('click', () => {
+            document.getElementById('course-modal').style.display = 'none';
+            document.getElementById('course-video').src = '';
+        });
+
+        // Close modal on outside click
+        document.getElementById('course-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                document.getElementById('course-video').src = '';
+            }
+        });
+
+        // Toggle dark mode
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        });
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true' || 
+            (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Prevent default anchor behavior
+        document.querySelectorAll('a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
